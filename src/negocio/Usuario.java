@@ -1,29 +1,29 @@
-package persistencia;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Scanner;
-
-import negocio.IExibir;
+package negocio;
 
 public class Usuario {
 
+	private Long id;
 	private String nome;
 	private String email;
 	private String login;
 	private String senha;
 
-	protected Scanner scan;
 	protected boolean execucao;
-	protected Collection<Usuario> listaClientes;
 
 	public Usuario() {
 
 	}
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public String getNome() {
-		return nome;
+		return nome.toString().toUpperCase();
 	}
 
 	public void setNome(String nome) {
@@ -31,7 +31,7 @@ public class Usuario {
 	}
 
 	public String getEmail() {
-		return email;
+		return email.toString().toUpperCase();
 	}
 
 	public void setEmail(String email) {
@@ -39,7 +39,7 @@ public class Usuario {
 	}
 
 	public String getLogin() {
-		return login;
+		return login.toString().toUpperCase();
 	}
 
 	public void setLogin(String login) {

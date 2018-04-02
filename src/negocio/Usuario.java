@@ -8,7 +8,7 @@ public class Usuario {
 	private String login;
 	private String senha;
 
-	protected boolean execucao;
+	//protected boolean execucao;
 
 	public Usuario() {
 
@@ -23,7 +23,7 @@ public class Usuario {
 	}
 
 	public String getNome() {
-		return nome.toString().toUpperCase();
+		return nome;
 	}
 
 	public void setNome(String nome) {
@@ -31,7 +31,7 @@ public class Usuario {
 	}
 
 	public String getEmail() {
-		return email.toString().toUpperCase();
+		return email;
 	}
 
 	public void setEmail(String email) {
@@ -39,7 +39,7 @@ public class Usuario {
 	}
 
 	public String getLogin() {
-		return login.toString().toUpperCase();
+		return login;
 	}
 
 	public void setLogin(String login) {

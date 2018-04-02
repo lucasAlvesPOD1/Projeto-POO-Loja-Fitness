@@ -47,7 +47,7 @@ public class Teste {
 				System.out.println("Opção Inválida \n");
 			}
 		}
-	}
+	}// fim do main
 
 	public static int menu() {
 		System.out.println("Selecione a opção:");
@@ -63,18 +63,6 @@ public class Teste {
 
 	}
 
-	private static Usuario login() {
-		String login = input("Digite seu login:");
-		String senha = input("Digite sua senha:");
-
-		Usuario usuario = mapUsers.get(login);
-		if (usuario.getSenha().equals(senha)) {
-			return usuario;
-		} else {
-			return null;
-		}
-	}
-
 	public static void cadastrar() {
 		boolean cadastrando = true;
 
@@ -82,26 +70,46 @@ public class Teste {
 			System.out.println("--Cadastro de Dados do Usuario--");
 
 			String nome = input("Digite o nome:");
+
 			String email = input("Digite o e-mail:");
+			
+			System.out.println("--Cadastro de Login--");
+			
+			String login = input("Digite o Login de acesso: ");
+			
+			String senha = input("Digite a Senha de acesso: ");
 
 			Usuario user = new Usuario();
 			user.setNome(nome);
 			user.setEmail(email);
-
-			System.out.println("--Cadastro de Login--");
-			user.setLogin(input("Digite o Login de acesso: "));
-			user.setSenha(input("Digite a Senha de acesso: "));
+			user.setLogin(login);
+			user.setSenha(senha);
+			
+//			user.setLogin(input("Digite o Login de acesso: "));
+//			user.setSenha(input("Digite a Senha de acesso: "));
 
 			String cadastrar = input("Confirmar cadastro (S/N)");
+
 			if (cadastrar.equalsIgnoreCase("s")) {
 				System.out.println("Cadastro realizado com sucesso.");
 				user.setId(somaId++);
 
 				if (somaId == 0) {
 					Administrador admin = new Administrador();
+					admin.setNome(user.getNome());
+					admin.setEmail(user.getEmail());
+
+					admin.setSenha(user.getSenha());
+					
 					mapUsers.put(user.getLogin(), admin);
 				}
-
+				
+				Cliente cliente = new Cliente();
+				cliente.setNome(user.getNome());
+				cliente.setEmail(user.getEmail());
+				cliente.setLogin(user.getLogin());
+				cliente.setSenha(user.getSenha());
+				
 				mapUsers.put(user.getLogin(), new Cliente());
 
 			} else if (cadastrar.equalsIgnoreCase("n")) {
@@ -131,7 +139,7 @@ public class Teste {
 
 			Iterator<Entry<String, Usuario>> iterator = mapUsers.entrySet().iterator();
 
-			System.out.println("Lista de Clientes");
+			System.out.println("Lista de Usuarios");
 
 			while (iterator.hasNext()) {
 				Entry<String, Usuario> userMap = iterator.next();
@@ -144,6 +152,18 @@ public class Teste {
 			System.out.println("---");
 		}
 
+	}
+
+	private static Usuario login() {
+		String login = input("Digite seu login:");
+		String senha = input("Digite sua senha:");
+
+		Usuario usuario = mapUsers.get(login);
+		if (usuario.getSenha().equals(senha)) {
+			return usuario;
+		} else {
+			return null;
+		}
 	}
 
 	public static String input(String text) {

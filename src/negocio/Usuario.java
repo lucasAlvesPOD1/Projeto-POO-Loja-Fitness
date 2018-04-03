@@ -2,23 +2,21 @@ package negocio;
 
 public class Usuario {
 
-	private Long id;
+	private int id;
 	private String nome;
 	private String email;
 	private String login;
 	private String senha;
 
-	//protected boolean execucao;
-
 	public Usuario() {
 
 	}
 
-	public Long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

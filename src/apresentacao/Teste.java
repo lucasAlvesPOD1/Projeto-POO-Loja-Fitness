@@ -13,7 +13,7 @@ import negocio.Usuario;
 public class Teste {
 
 	private static Map<String, Usuario> mapUsers;
-	private static Long somaId = 0L;
+	private static int somaId = 0;
 	private static Scanner scan;
 
 	static {
@@ -38,9 +38,9 @@ public class Teste {
 				Usuario usuarioLogado = login();
 				if (usuarioLogado != null) {
 					if (usuarioLogado instanceof Administrador) {
-						// menuAdministrador
+						menuAdmLogado();
 					} else {
-						// menuCliente
+						menuClienteLogado();
 					}
 				}
 			} else {
@@ -48,6 +48,14 @@ public class Teste {
 			}
 		}
 	}// fim do main
+
+	public static void menuAdmLogado() {
+		// tudo que o adm pode fazer e ver
+	}
+
+	public static void menuClienteLogado() {
+		// tudo que o cliente pode fazer e ver
+	}
 
 	public static int menu() {
 		System.out.println("Selecione a opção:");
@@ -72,11 +80,11 @@ public class Teste {
 			String nome = input("Digite o nome:");
 
 			String email = input("Digite o e-mail:");
-			
+
 			System.out.println("--Cadastro de Login--");
-			
+
 			String login = input("Digite o Login de acesso: ");
-			
+
 			String senha = input("Digite a Senha de acesso: ");
 
 			Usuario user = new Usuario();
@@ -84,33 +92,34 @@ public class Teste {
 			user.setEmail(email);
 			user.setLogin(login);
 			user.setSenha(senha);
-			
-//			user.setLogin(input("Digite o Login de acesso: "));
-//			user.setSenha(input("Digite a Senha de acesso: "));
 
 			String cadastrar = input("Confirmar cadastro (S/N)");
 
 			if (cadastrar.equalsIgnoreCase("s")) {
 				System.out.println("Cadastro realizado com sucesso.");
-				user.setId(somaId++);
 
 				if (somaId == 0) {
+					user.setId(somaId++);
 					Administrador admin = new Administrador();
+					admin.setId(user.getId());
 					admin.setNome(user.getNome());
 					admin.setEmail(user.getEmail());
-
+					admin.setLogin(user.getLogin());
 					admin.setSenha(user.getSenha());
-					
+
 					mapUsers.put(user.getLogin(), admin);
+
 				}
-				
+
+				user.setId(somaId++);
+
 				Cliente cliente = new Cliente();
+				cliente.setId(user.getId());
 				cliente.setNome(user.getNome());
 				cliente.setEmail(user.getEmail());
 				cliente.setLogin(user.getLogin());
 				cliente.setSenha(user.getSenha());
-				
-				mapUsers.put(user.getLogin(), new Cliente());
+				mapUsers.put(user.getLogin(), cliente);
 
 			} else if (cadastrar.equalsIgnoreCase("n")) {
 				System.out.println("Cadastro negado.");
@@ -119,6 +128,7 @@ public class Teste {
 			}
 
 			String continuar = input("Deseja cadastrar mais um usuário (S/N) ?");
+
 			if (continuar.equalsIgnoreCase("s")) {
 
 			} else if (continuar.equalsIgnoreCase("n")) {

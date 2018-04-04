@@ -2,16 +2,41 @@ package negocio;
 
 public class Produto {
 
-	public Long id;
+	public int id;
+	public String nome;
 	public double preco;
 	public String marca;
+	public String sexo;
 
-	public Long getId() {
+	public Produto(int id, String nome, double preco, String marca) {
+		this.id = id;
+		this.nome = nome;
+		this.preco = preco;
+		this.marca = marca;
+	}
+
+	public Produto(int id, String nome, double preco, String marca, String sexo) {
+		this.id = id;
+		this.nome = nome;
+		this.preco = preco;
+		this.marca = marca;
+		this.sexo = sexo;
+	}
+
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 	public double getPreco() {

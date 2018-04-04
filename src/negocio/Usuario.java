@@ -11,6 +11,18 @@ public class Usuario {
 	public Usuario() {
 
 	}
+	
+	
+
+	public Usuario(int id, String nome, String email, String login, String senha) {
+		this.id = id;
+		this.nome = nome;
+		this.email = email;
+		this.login = login;
+		this.senha = senha;
+	}
+
+
 
 	public int getId() {
 		return id;

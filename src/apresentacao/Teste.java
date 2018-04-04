@@ -8,17 +8,37 @@ import java.util.Scanner;
 
 import negocio.Administrador;
 import negocio.Cliente;
+import negocio.Produto;
 import negocio.Usuario;
 
 public class Teste {
 
 	private static Map<String, Usuario> mapUsers;
+	private static Map<Integer, Produto> mapProdutos;
 	private static int somaId = 0;
 	private static Scanner scan;
 
-	static {
-		mapUsers = new HashMap<String, Usuario>();
+	static {// instanciar as variáveis apenas quando a aplicação é iniciada
 		scan = new Scanner(System.in);
+		mapUsers = new HashMap<String, Usuario>();
+		mapUsers.put("lucas", new Usuario(2, "Lucas", "lukasalvespod1@gmail.com", "lucas", "123"));
+		mapUsers.put("ayrton", new Usuario(3, "Ayrton", "ayrton@gmail.com", "ayrton", "123"));
+		mapUsers.put("jaicke", new Usuario(4, "Jaicke", "jaicke@gmail.com", "jaicke", "123"));
+		mapUsers.put("matheus", new Usuario(5, "Matheus", "matheus@gmail.com", "matheus", "123"));
+
+		mapProdutos = new HashMap<Integer, Produto>();
+		mapProdutos.put(1, new Produto(1, "Bermuda Nike Dry", 74.99, "Nike", "Masculino"));
+		mapProdutos.put(2, new Produto(2, "Camiseta Regata Nike Legend", 69.99, "Nike", "Masculino"));
+		mapProdutos.put(3, new Produto(3, "Boné Aba Curva adidas", 44.99, "Nike", "Masculino"));
+		mapProdutos.put(4, new Produto(4, "Mochila Nike Elemental", 99.99, "Nike", "Masculino"));
+		mapProdutos.put(5, new Produto(5, "Tênis NIke Downshifter 7", 189.99, "Nike", "Masculino"));
+		mapProdutos.put(6, new Produto(6, "Calça Legging Oxer Jogging", 39.99, "Oxer", "Feminino"));
+		mapProdutos.put(7, new Produto(7, "Camiseta Oxer Cord II", 29.99, "Oxer", "Feminino"));
+		mapProdutos.put(8, new Produto(8, "Tênis Oxer Agile", 59.99, "Oxer", "Feminino"));
+		mapProdutos.put(9, new Produto(9, "Creatina Integralmedica - 300g", 37.90, "Integralmedica"));
+		mapProdutos.put(10, new Produto(10, "Whey Protein Integralmedica Nutri - Chocolate - 1,8Kg", 79.85, "Integralmedica"));
+		mapProdutos.put(11, new Produto(11, "Pré-Treino BodyAction - Uva com Blueberry - 100g", 48.58, "Integralmedica"));
+		mapProdutos.put(12, new Produto(12, "Energético - Sabor Guaraná e Açaí - 30g", 2.90, "Probiótica"));
 	}
 
 	public static void main(String[] args) {
@@ -29,12 +49,6 @@ public class Teste {
 		while (execucao) {
 			int opcao = menu();
 			if (opcao == 1) {
-				cadastrar();
-			} else if (opcao == 2) {
-				listarCadastros();
-			} else if (opcao == 3) {
-				execucao = false;
-			} else if (opcao == 4) {
 				Usuario usuarioLogado = login();
 				if (usuarioLogado != null) {
 					if (usuarioLogado instanceof Administrador) {
@@ -43,26 +57,41 @@ public class Teste {
 						menuClienteLogado();
 					}
 				}
+				// cadastrar();
+			} else if(opcao == 2) {
+				cadastrar();
+			} else if (opcao == 3) {
+				listarCadastros();
+			} else if (opcao == 4) {
+				execucao = false;
 			} else {
 				System.out.println("Opção Inválida \n");
 			}
+
 		}
 	}// fim do main
 
 	public static void menuAdmLogado() {
-		// tudo que o adm pode fazer e ver
+		System.out.println("Bem-Vindo Admin.");
+		cadastrar();
 	}
 
 	public static void menuClienteLogado() {
-		// tudo que o cliente pode fazer e ver
+		System.out.println("Lista de Produtos");
+
+		for (Produto key : mapProdutos.values()) {
+			System.out.println("Id: " + key.getId() + "\n " + "Nome: " + key.getNome() + "\n " + " Preço: " + key.getPreco() + "\n " + "Marca: " + key.getMarca());
+
+		}
+
 	}
 
 	public static int menu() {
 		System.out.println("Selecione a opção:");
-		System.out.println("1 - Novo cadastro");
-		System.out.println("2 - Listar cadastros");
-		System.out.println("3 - Sair");
-		System.out.println("4 - Login");
+		System.out.println("1 - Login");
+		System.out.println("2 - Cadastrar Usuario");
+		System.out.println("3 - Listar cadastros");
+		System.out.println("4 - Sair");
 
 		int nextInt = scan.nextInt();
 		scan.nextLine();// consumir o \n causado pelo nextInt (referencia:
@@ -172,6 +201,7 @@ public class Teste {
 		if (usuario.getSenha().equals(senha)) {
 			return usuario;
 		} else {
+			System.out.println("Usuario ou senha invalido.");
 			return null;
 		}
 	}

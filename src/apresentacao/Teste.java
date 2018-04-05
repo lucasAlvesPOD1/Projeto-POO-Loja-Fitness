@@ -19,12 +19,23 @@ public class Teste {
 	private static Scanner scan;
 
 	static {// instanciar as variáveis apenas quando a aplicação é iniciada
+		// Um bloco estático é executado somente uma vez, imediatamente após a primeira
+		// referencia a class, isto é, no carregamento da memória.
+		//
+		// Como o bloco de estático é executado no carregamento da classe,
+		// consequentemente será executado antes da chamada ao construtor da classe.
+		// Dentro de um bloco de código estático poderemos acessar somente atributos e
+		// métodos estáticos.
 		scan = new Scanner(System.in);
 		mapUsers = new HashMap<String, Usuario>();
-		mapUsers.put("lucas", new Usuario(2, "Lucas", "lukasalvespod1@gmail.com", "lucas", "123"));
-		mapUsers.put("ayrton", new Usuario(3, "Ayrton", "ayrton@gmail.com", "ayrton", "123"));
-		mapUsers.put("jaicke", new Usuario(4, "Jaicke", "jaicke@gmail.com", "jaicke", "123"));
-		mapUsers.put("matheus", new Usuario(5, "Matheus", "matheus@gmail.com", "matheus", "123"));
+		// mapUsers.put("lucas", new Usuario(2, "Lucas", "lukasalvespod1@gmail.com",
+		// "lucas", "123"));
+		// mapUsers.put("ayrton", new Usuario(3, "Ayrton", "ayrton@gmail.com", "ayrton",
+		// "123"));
+		// mapUsers.put("jaicke", new Usuario(4, "Jaicke", "jaicke@gmail.com", "jaicke",
+		// "123"));
+		// mapUsers.put("matheus", new Usuario(5, "Matheus", "matheus@gmail.com",
+		// "matheus", "123"));
 
 		mapProdutos = new HashMap<Integer, Produto>();
 		mapProdutos.put(1, new Produto(1, "Bermuda Nike Dry", 74.99, "Nike", "Masculino"));
@@ -57,8 +68,7 @@ public class Teste {
 						menuClienteLogado();
 					}
 				}
-				// cadastrar();
-			} else if(opcao == 2) {
+			} else if (opcao == 2) {
 				cadastrar();
 			} else if (opcao == 3) {
 				listarCadastros();
@@ -72,17 +82,38 @@ public class Teste {
 	}// fim do main
 
 	public static void menuAdmLogado() {
-		System.out.println("Bem-Vindo Admin.");
-		cadastrar();
+//		boolean execucaoAdmin = true;
+//		System.out.println("Bem-Vindo Admin.\n");
+//		System.out.println("Menu:");
+//		
+//		
+//		while (execucaoAdmin) {
+//			System.out.println("1 - Lista de Usuarios:");
+//			System.out.println("2 - Lista de Produtos:");
+//			System.out.println("3 - Cadastrar Clientes:");
+//			System.out.println("4 - Cadastrar Produtos:");
+//			System.out.println("5 - Sair");
+//			int opcaoMenuAdmin = scan.nextInt();
+//			if (opcaoMenuAdmin == 1) {
+//				listarCadastros();
+//			} else if(opcaoMenuAdmin == 2){
+//				listarProdutos();
+//			} else if(opcaoMenuAdmin == 3) {
+//				cadastrar();
+//			} else if(opcaoMenuAdmin == 4) {
+//				System.out.println("Cadastrar produtos");
+//			} else if(opcaoMenuAdmin == 5) {
+//				execucaoAdmin = false;
+//			} else {
+//				System.out.println("Opção Inválida \n");
+//			}
+//		}
+		
+		
 	}
 
 	public static void menuClienteLogado() {
-		System.out.println("Lista de Produtos");
-
-		for (Produto key : mapProdutos.values()) {
-			System.out.println("Id: " + key.getId() + "\n " + "Nome: " + key.getNome() + "\n " + " Preço: " + key.getPreco() + "\n " + "Marca: " + key.getMarca());
-
-		}
+		listarProdutos();
 
 	}
 
@@ -105,24 +136,29 @@ public class Teste {
 
 		while (cadastrando) {
 			System.out.println("--Cadastro de Dados do Usuario--");
+			System.out.println("Digite o nome:");
+			String nome = scan.next();
 
-			String nome = input("Digite o nome:");
+			System.out.println("Digite o e-mail:");
+			String email = scan.next();
 
-			String email = input("Digite o e-mail:");
 
 			System.out.println("--Cadastro de Login--");
-
-			String login = input("Digite o Login de acesso: ");
-
-			String senha = input("Digite a Senha de acesso: ");
+			
+			System.out.println("Digite o Login de acesso: ");
+			String login = scan.next();
+			
+			System.out.println("Digite a Senha de acesso: ");
+			String senha = scan.next();
 
 			Usuario user = new Usuario();
 			user.setNome(nome);
 			user.setEmail(email);
 			user.setLogin(login);
 			user.setSenha(senha);
-
-			String cadastrar = input("Confirmar cadastro (S/N)");
+			
+			System.out.println("Confirmar cadastro (S/N)");
+			String cadastrar = scan.next();
 
 			if (cadastrar.equalsIgnoreCase("s")) {
 				System.out.println("Cadastro realizado com sucesso.");
@@ -138,25 +174,26 @@ public class Teste {
 
 					mapUsers.put(user.getLogin(), admin);
 
+				} else {
+					user.setId(somaId++);
+
+					Cliente cliente = new Cliente();
+					cliente.setId(user.getId());
+					cliente.setNome(user.getNome());
+					cliente.setEmail(user.getEmail());
+					cliente.setLogin(user.getLogin());
+					cliente.setSenha(user.getSenha());
+					mapUsers.put(user.getLogin(), cliente);
 				}
-
-				user.setId(somaId++);
-
-				Cliente cliente = new Cliente();
-				cliente.setId(user.getId());
-				cliente.setNome(user.getNome());
-				cliente.setEmail(user.getEmail());
-				cliente.setLogin(user.getLogin());
-				cliente.setSenha(user.getSenha());
-				mapUsers.put(user.getLogin(), cliente);
 
 			} else if (cadastrar.equalsIgnoreCase("n")) {
 				System.out.println("Cadastro negado.");
 			} else {
 				System.out.println("Opção inválida.");
 			}
-
-			String continuar = input("Deseja cadastrar mais um usuário (S/N) ?");
+			
+			System.out.println("Deseja cadastrar mais um usuário (S/N) ?");
+			String continuar = scan.next();
 
 			if (continuar.equalsIgnoreCase("s")) {
 
@@ -192,22 +229,52 @@ public class Teste {
 		}
 
 	}
-
-	private static Usuario login() {
-		String login = input("Digite seu login:");
-		String senha = input("Digite sua senha:");
-
-		Usuario usuario = mapUsers.get(login);
-		if (usuario.getSenha().equals(senha)) {
-			return usuario;
+	
+	public static void listarProdutos() {
+		if (mapProdutos.size() == 0) {
+			System.out.println("Não existe produtos.");
 		} else {
-			System.out.println("Usuario ou senha invalido.");
-			return null;
+			Iterator<Entry<Integer, Produto>> iterator = mapProdutos.entrySet().iterator();
+
+			System.out.println("Lista de Produtos");
+
+			while (iterator.hasNext()) {
+				Entry<Integer, Produto> produtoMap = iterator.next();
+				Produto produto = produtoMap.getValue();
+				System.out.println("Id: " + produto.getId());
+				System.out.println("Nome: " + produto.getNome());
+				System.out.println("Marca: " + produto.getMarca());
+				System.out.println("Preço: R$" + produto.getPreco());
+				System.out.println();
+			}
+			System.out.println("---");
 		}
 	}
 
-	public static String input(String text) {
-		System.out.print(text);
-		return scan.nextLine();
+	private static Usuario login() {
+		if(mapUsers.size() == 0) {
+			System.out.println("Não existe usuarios cadastrados.");
+		} else {
+			System.out.println("Digite seu login:");
+			String login = scan.next();
+			System.out.println("Digite sua senha:");
+			String senha = scan.next();
+
+			Usuario usuario = mapUsers.get(login);
+			if (usuario.getSenha().equals(senha)) {
+				return usuario;
+			} else {
+				System.out.println("Usuario ou senha invalido.");
+				return null;
+			}
+		}
+		return null;
+		
+		
 	}
+
+//	public static String input(String text) {
+//		System.out.print(text);
+//		return scan.nextLine();
+//	}
 }
